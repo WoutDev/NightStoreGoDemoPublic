@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Online bestellen bij een belgische nachtwinkel in enkele kliks. Bestelling gratis geleverd.">
+
+    <title>NightStoreGO!</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<%= request.base_url %>/css/custom.css" rel="stylesheet">
+
+    <%= @extra_headers %>
+
+    <!--[if lt IE 9]>
+    <script src="<%= request.base_url %>/js/html5shiv.js"></script>
+    <script src="<%= request.base_url %>/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container">
+      <noscript>
+        <div class="alert alert-danger">
+          <strong>JavaScript staat uit!</strong> Deze website kan niet functioneren zonder JavaScript. Gelieven JavaScript aan te zetten en vervolgens door te gaan.
+        </div>
+      </noscript>
+      <div id="iemessage"></div>
+      <script>
+          if (document.documentMode || /Edge/.test(navigator.userAgent)) {
+              document.getElementById('iemessage').innerHTML = '<div class="alert alert-danger"><strong>Internet Explorer of Edge gedetecteerd!</strong> We weten dat deze website minder goed werkt met Internet Explorer en Edge. Voor een betere ervaring, gelieve een andere browser te gebruiken. Het kan mogelijk zijn dat sommige functies van deze website dus niet werken!'
+          }
+      </script>
+    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #000000">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigatie</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><img src="/img/logo.jpg" alt="NightStoreGo!"></a>
+          <div class="visible-xs">
+            <ul class="nav navbar-nav pull-left" style="padding-left: 1px">
+              <li><a href="/winkelmand">Winkelmand <span class='badge' id="basket-size-xs"><%= session[:basket] != nil ? session[:basket].inject(0) {|sum, item| sum += item[1]} : 0 %></span></a></li>
+            </ul>
+          </div>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="<%= 'active' if @page == 'contact' %>"><a href="/contact">Contact</a></li>
+            <li class="<%= 'active' if @page == 'basket' %> hidden-xs"><a href="/winkelmand">Winkelmand <span class='badge' id="basket-size"><%= session[:basket] != nil ? session[:basket].inject(0) {|sum, item| sum += item[1]} : 0 %></span></a></li>
+            <li class="<%= 'active' if @page == 'joinus' %>"><a href="/joinus">Join Us</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <% if session[:user].nil? %>
+              <li><a href="/login">Login</a></li>
+              <li><a href="/registreer">Registreer</a></li>
+            <% else %>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user" aria-hidden="true"></i> <%= session[:user].phone.capitalize %><span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/bestellingen">Bestellingen</a></li>
+                <li><a href="/instellingen">Instellingen</a></li>
+                <li class="divider"></li>
+                <% if session[:user].admin? %>
+                  <li><a href="/admin" style="color: crimson;">Beheer</a></li>
+                  <li class="divider"></li>
+                <% end %>
+                <li><a href="/logout">Uitloggen</a></li>
+              </ul>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <%= yield %>
+
+    <br />
+    <div class="container-fluid footer">
+      <footer class="modal-footer" style="margin: 0; padding: 0">
+        <div class="pull-left">
+          <a href="<%= settings.media_facebook_link %>" style="text-decoration: none; color: black;"><i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a>
+          <a href="<%= settings.media_twitter_link %>" style="text-decoration: none; color: black;"><i class="fa fa-twitter-square fa-3x" aria-hidden="true"></i></a>
+          <a href="<%= settings.media_instagram_link %>" style="text-decoration: none; color: black;"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
+        </div>
+        <p>Copyright &copy; 2017 NightStoreGo!</p>
+        <a href="/voorwaarden">Algemene Voorwaarden</a> * <a href="/privacy">Privacy Statement</a>
+      </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="<%= request.base_url %>/js/custom.js"></script>
+
+    <%= @extra_scripts %>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="<%= request.base_url %>/css/bootstrap.min.css" rel="stylesheet">
+  <link href="<%= request.base_url %>/css/login.css" rel="stylesheet">
+  <link href="<%= request.base_url %>/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+  <title>NightStoreGo! Login</title>
+</head>
+<body>
+<div class="container">
+  <div class="row main">
+    <div class="panel-heading">
+      <div class="panel-title text-center">
+        <h1 class="title">NightStoreGo!</h1>
+        <hr />
+      </div>
+    </div>
+    <div class="main-login main-center">
+      <form class="form-horizontal" method="POST" action="/login">
+        <%= flash[:warning] %>
+        <div class="form-group">
+          <label for="phone" class="cols-sm-2 control-label">Telefoon nr.</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+              <input type="text" class="form-control" name="phone" id="phone"  placeholder=""/>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="cols-sm-2 control-label">Wachtwoord</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+              <input type="password" class="form-control" name="password" id="password"  placeholder=""/>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Login</button>
+        </div>
+
+        <a href="/registreer">Nog geen account? Klik hier om te registreren.</a><br /><br />
+        <a href="/contact">Wachtwoord vergeten? Contacteer ons.</a><br /><br />
+        <a href="/">Terug naar hoofdpagina</a>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</body>
+</html>

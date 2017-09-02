@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="row">
+    <h2>Instellingen</h2>
+    <p>Op deze pagina kan je je instellingen aanpassen.</p>
+  </div>
+  <div class="row">
+    <h2>Gegevens</h2>
+    <hr />
+    <br/>
+    <%= flash_tag %>
+    <form class="form-horizontal" id="register-form" role="form" method="POST" action="/instellingen">
+      <div class="col-lg-7">
+        <fieldset>
+          <legend>Algemeen</legend>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="phone">Telefoon nr.</label>
+            <div class="col-sm-4">
+              <input type="tel" name="phone" id="phone" class="form-control" autocomplete="tel"<%= " value=\"#{session[:user].phone}\"" %>>
+            </div>
+
+            <label class="col-sm-2 control-label" for="password">Nieuw Wachtwoord</label>
+            <div class="col-sm-4">
+              <input type="password" name="password" id="password" class="form-control">
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Leveringsadres</legend>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="street">Straatnaam</label>
+            <div class="col-sm-4">
+              <input type="text" name="street" id="street" class="form-control" autocomplete="address-line1"<%= " value=\"#{session[:user].address[:street]}\"" %>>
+            </div>
+
+            <label class="col-sm-2 control-label" for="housenumber">Huisnummer</label>
+            <div class="col-sm-4">
+              <input type="text" name="housenumber" id="housenumber" class="form-control" autocomplete="address-line2"<%= " value=\"#{session[:user].address[:housenumber]}\"" %>>
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="postcode">Postcode</label>
+            <div class="col-sm-4">
+              <input type="text" name="postcode" id="postcode" class="form-control" autocomplete="postal-code"<%= " value=\"#{session[:user].address[:postcode]}\"" %>>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>(huidig) Wachtwoord herhalen (verificiatie)</legend>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="current-password">Wachtwoord</label>
+            <div class="col-sm-4">
+              <input type="password" name="currentpassword" id="currentpassword" class="form-control">
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <div class="pull-right">
+                <button type="submit" id="submit-button" class="btn btn-primary">Instellingen aanpassen</button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </form>
+  </div>
+</div>

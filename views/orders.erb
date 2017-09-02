@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <h2>Bestellingen</h2>
+    <hr />
+    <div class="col-md-9">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Datum</th>
+          <th>Totaal €</th>
+          <th>Winkel</th>
+          <th>Bestelling</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @orders.each do |order| %>
+            <tr>
+              <td><%= order.created_at.localtime.strftime("%c") %></td>
+              <td>€<%= '%0.02f' % order.total %></td>
+              <td><a href="/winkel/<%= order.shop.address[:postcode] %>/<%= order.shop.slug %>"><%= order.shop.name.capitalize %></a></td>
+              <td>
+                <% order.products.values.each do |product| %>
+                    <strong><%= product[:quantity] %>x</strong> <%= product[:name] %><br />
+                <% end %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

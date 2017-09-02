@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+    <%= erb :admin_menu %>
+
+    <h2>DELETE: <%= @order.id %></h2>
+    <hr />
+    <div class="col-md-9">
+      <p>Weet je zeker dat je die bestelling wilt verwijderen? De informatie zal definitief verwijderd worden uit de databank. <strong>Let ook op dat de mail naar de leverancier al verstuurd is! Deze kan niet worden verwijderd door ons.</strong></p>
+      <form action="/admin/bestelling/<%= @order.id %>/delete" method="POST">
+        <input type="submit" value="Ik ben zeker" class="btn btn-danger" />
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="container">
+
+  <% if @shop == nil %>
+      <div class="alert alert-info">
+        <strong>Oops!</strong> Je hebt momenteel nog niets in je winkelmandje.
+      </div>
+  <% else %>
+      <% if !@shop.opening_hours.in_hours?(Time.now) %>
+        <div class="alert alert-warning" id="schedulewarning">
+          <strong>Oops!</strong> De winkel waarbij je onderstaande producten wilt bestellen is momenteel gesloten.<br />
+          <a href="/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>/emptybasket"><i class="fa fa-long-arrow-right" aria-hidden="true"></i> Leeg winkelmandje</a>
+        </div>
+      <% else %>
+      <h2>Je winkelmandje</h2>
+      <strong>Leverancier: </strong><span id="shopname" data-slug="<%= @shop.slug %>" data-postcode="<%= @shop.address[:postcode] %>"><%= @shop.name %></span><br/><br />
+        <div class="alert alert-warning" id="pricewarning" <%= 'hidden' unless session[:basket].inject(0) { |sum, item| sum += item[0].price * item[1] } < @shop.min_price %>>
+          <strong>Oops!</strong> Je winkelmandje heeft nog niet de minimumwaarde van €<span id="minprice"><%= '%0.2f' % @shop.min_price %></span> bereikt. Je kan dus nog niet bestellen!
+        </div>
+      <table id="cart" class="table table-hover table-condensed">
+        <thead>
+        <tr>
+          <th style="width:50%">Product</th>
+          <th style="width:10%">Prijs</th>
+          <th style="width:8%">Aantal</th>
+          <th style="width:22%" class="text-center">Subtotaal</th>
+          <th style="width:10%"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% session[:basket].each do |item| %>
+            <tr data-th="Product-Parent" data-product="<%= item[0].id %>">
+              <td data-th="Product" data-product="<%= item[0].id %>">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <h4 class="nomargin"><%= item[0].name %></h4>
+                    <p class="hidden-xs"><%= item[0].description %></p>
+                  </div>
+                </div>
+              </td>
+              <td class="hidden-xs" data-th="Prijs" data-product="<%= item[0].id %>">€<%= '%0.02f' % item[0].price %></td>
+              <td data-th="Aantal">
+                <input type="number" class="form-control text-center" value="<%= item[1] %>" data-product="<%= item[0].id %>">
+              </td>
+              <td data-th="Subtotaal" data-product="<%= item[0].id %>" class="text-center">€<%= '%0.02f' % (item[0].price * item[1]) %></td>
+              <td class="actions">
+                <button class="btn btn-info btn-sm refresh-item" data-product="<%= item[0].id %>">
+                  <i class="fa fa-refresh"></i></button>
+                <button class="btn btn-danger btn-sm delete-item" data-product="<%= item[0].id %>">
+                  <i class="fa fa-trash-o"></i></button>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+        <tfoot>
+        <tr class="visible-xs">
+          <td class="text-center" data-th="Total-Small"><strong>Totaal
+            €<%= '%0.02f' % session[:basket].inject(0) { |sum, item| sum += item[0].price * item[1] } %></strong></td>
+        </tr>
+        <tr>
+          <td>
+            <a href="/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>" class="btn btn-warning"><i class="fa fa-angle-left"></i>
+              Terug naar nachtwinkel</a>
+            <a href="/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>/emptybasket" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Winkelmandje leegmaken</a></td>
+          <td colspan="2" class="hidden-xs"></td>
+          <td data-th="Total" class="hidden-xs text-center"><strong>Totaal
+            €<%= '%0.02f' % session[:basket].inject(0) { |sum, item| sum += item[0].price * item[1] } %></strong></td>
+          <td><button href="/bestel" class="btn btn-success btn-block" id="orderbutton" <%= 'disabled' unless session[:basket].inject(0) { |sum, item| sum += item[0].price * item[1] } > @shop.min_price %>>Bestel <i class="fa fa-angle-right"></i></button></td>
+        </tr>
+        </tfoot>
+      </table>
+      <% end %>
+  <% end %>
+</div>

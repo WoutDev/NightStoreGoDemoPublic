@@ -1,0 +1,104 @@
+<div class="container">
+  <div class="row">
+    <%= erb :admin_menu %>
+
+    <div class="col-md-9">
+      <h2>Winkels</h2>
+      <hr />
+      <%= flash_tag %>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Naam</th>
+          <th>Gemeente</th>
+          <th>Postcode</th>
+          <th>Min. prijs</th>
+          <th></th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @shops.each do |shop| %>
+            <tr>
+              <td><%= shop.name %></td>
+              <td><%= shop.address[:city].capitalize %></td>
+              <td><%= shop.address[:postcode] %></td>
+              <td>€<%= '%0.02f' % shop.min_price %></td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-warning btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Edit <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="/admin/winkel/<%= shop.address[:postcode] %>/<%= shop.slug %>/edit/info">Info</a></li>
+                    <li><a href="/admin/winkel/<%= shop.address[:postcode] %>/<%= shop.slug %>/edit/schedule">Openingsuren</a></li>
+                    <li><a href="/admin/winkel/<%= shop.address[:postcode] %>/<%= shop.slug %>/edit/products">Producten</a></li>
+                  </ul>
+                </div>
+              </td>
+              <td><a href="/admin/winkel/<%= shop.address[:postcode] %>/<%= shop.slug %>/delete" class="btn btn-danger btn-xs">Delete</a></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <h2>Nieuw</h2>
+      <hr />
+      <p>Andere informatie zoals producten en openingsuren kan je direct na het aanmaken van de winkel aanpassen via de Edit-knop.</p><br />
+      <form class="form-horizontal" action="/admin/winkel" method="POST">
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="name">Naam</label>
+          <div class="col-md-6">
+            <input type="text" name="name" id="name" class="form-control"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="min_price">Minimum prijs</label>
+          <div class="col-md-6">
+            <input type="text" name="min_price" id="min_price" class="form-control"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="email">Email</label>
+          <div class="col-md-6">
+            <input type="email" name="email" id="email" class="form-control"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="estimate_delivery_minutes">Gemiddelde levertijd (min)</label>
+          <div class="col-md-6">
+            <input type="text" name="estimate_delivery_minutes" id="estimate_delivery_minutes" class="form-control"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="street">Straat + nr</label>
+          <div class="col-md-6">
+            <input type="text" name="street" id="street" class="form-control"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="city">Stad</label>
+          <div class="col-md-6">
+            <input type="text" name="city" id="city" class="form-control"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="postcode">Postcode</label>
+          <div class="col-md-6">
+            <input type="text" name="postcode" id="postcode" class="form-control"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="province">Provincie</label>
+          <div class="col-md-6">
+            <input type="text" name="province" id="province" class="form-control"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-primary pull-right" value="Aanmaken"/>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

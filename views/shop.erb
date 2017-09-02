@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="col-lg-3">
+        <h4 id="shopname" data-slug="<%= @shop.name.slugify %>"><%= @shop.name %></h4>
+        <ul class="list-group" data-spy="affix" data-offset-top="90" id="sidebar" data-clampedwidth=".col-lg-3">
+          <% @categories.each do |c| %>
+              <a href="#<%= c.name.slugify %>" class="list-group-item">
+              <span class="badge">
+                <%= @shop.products.inject(0) do |sum, p|
+                  if p.category.name == c.name
+                    sum += 1
+                  else
+                    sum
+                  end
+                end %>
+              </span>
+                <%= c.name %>
+              </a>
+          <% end %>
+          <li class="list-group-item">
+            <%= @shop.opening_hours.in_hours?(Time.now) ? '<span class="label label-success">OPEN</span>' : '<span class="label label-danger">GESLOTEN</span>' %><br />
+            <strong>Minimum bedrag: </strong>€<%= '%0.02f' % @shop.min_price %><br/>
+            <strong>Geschatte levertijd: </strong><%= @shop.estimate_delivery_in_minutes %> minuten<br />
+            <strong>Adres: </strong><br/><%= "#{@shop.address[:address]} <br /> #{@shop.address[:postcode]} #{@shop.address[:city].capitalize} <br /> #{@shop.address[:province]}" %>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-9">
+        <% if session[:basket] != nil && !session[:basket].empty? && session[:basket][0][0].shop.id != @shop.id %>
+            <div class="alert alert-warning">
+              <strong>Opgelet!</strong> Je hebt momenteel nog product(en) in je winkelmandje van een andere nachtwinkel. Gelieven deze eerst te verwijderen voordat je besteld bij een andere.<br />
+              <a href="/winkel/<%= session[:basket][0][0].shop.address[:postcode] %>/<%= session[:basket][0][0].shop.slug %>"><i class="fa fa-long-arrow-right" aria-hidden="true"></i> Ga terug naar <%= session[:basket][0][0].shop.name %></a><br />
+              <a href="/winkel/<%= session[:basket][0][0].shop.address[:postcode] %>/<%= session[:basket][0][0].shop.slug %>/emptybasket"><i class="fa fa-long-arrow-right" aria-hidden="true"></i> Leeg winkelmandje</a>
+            </div>
+        <% end %>
+        <% unless @shop.opening_hours.in_hours?(Time.now) %>
+            <div class="alert alert-warning">
+              <strong>Opgelet!</strong> Deze nachtwinkel is momenteel gesloten. Je kan de producten bekijken, maar bestellen gaat niet.<br />
+            </div>
+        <% end %>
+        <% @categories.each do |c| %>
+            <h4 id="<%= c.name.slugify %>"><%= c.name %></h4>
+            <hr/>
+            <% @shop.products.each do |p| %>
+                <% if p.category.id == c.id %>
+                    <div class="panel panel-default" id="<%= p.id %>-header">
+                      <div class="panel-heading">
+                        <%= p.name %>
+                        <div class="pull-right" id="<%= p.id %>-price">€<%= '%.02f' % p.price %></div>
+                      </div>
+                      <div class="panel-body">
+                        <%= p.description %>
+                        <button class="btn btn-primary btn-xs pull-right add" data-product="<%= p.id %>">Koop</button>
+                        <% unless p.min_age == 0 %>
+                            <br/><span class="label label-warning"><%= p.min_age %>+</span>
+                        <% end %>
+                      </div>
+                    </div>
+                <% end %>
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="modal fade" id="productModal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"></h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer clearfix">
+            <div class="col-lg-4 col-lg-offset-6">
+              <div class="input-group">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="btn-min"><span class="glyphicon glyphicon-minus"></span></button>
+                  </span>
+                <input type="number" class="form-control scroll" name="amount" id="amount" value="1" min="1" max="99" style="text-align: center"/>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="btn-plus"><span class="glyphicon glyphicon-plus"></span></button>
+                  </span>
+              </div>
+            </div>
+            <div class="col-lg-2">
+              <button class="btn btn-primary set-amount" type="button" id="btn-submit" data-dismiss="modal">Koop</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

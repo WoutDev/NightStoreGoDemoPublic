@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row">
+    <%= erb :admin_menu %>
+
+    <h2><%= @category.name %></h2>
+    <hr />
+    <div class="col-md-9">
+      <%= flash_tag %>
+      <form class="form-horizontal" action="/admin/categorie/<%= @category.id %>/edit" method="POST">
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Naam</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" name="name" value="<%= @category.name %>">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <a href="/admin/categorieën" class="btn btn-default">Terug</a>
+            <input type="submit" value="Pas aan" class="btn btn-primary pull-right"/>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

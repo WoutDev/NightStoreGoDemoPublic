@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row">
+    <form action="/" method="GET" class="form-inline">
+      <div class="form-group pull-right col-sm-offset-7 col-sm-5">
+        <label for="location">Gemeente / Postcode</label>
+        <input type="text" class="form-control" id="location" name="location" value="<%= !@params['location'].nil? ? @params['location'] : '' %>">
+        <input type="submit" class="form-control btn btn-primary" value="Zoek">
+      </div>
+    </form>
+  </div>
+
+  <br />
+
+  <% if @shops.length == 0 %>
+      <div class="row">
+        <div class="alert alert-warning">
+          <strong>Oops!</strong> Het ziet er naar uit dat <%= @params.has_key?('location') ? "er nog geen nachtwinkels actief zijn in #{@params['location']}." : " er momenteel nog geen active nachtwinkels zijn. <a href=\"/joinus\">Ben je een nachtwinkel eigenaar? Klik dan hier om contact met ons op te nemen.</a>" %>
+        </div>
+      </div>
+  <% else %>
+
+  <%= flash_tag %>
+
+  <div id="no-more-tables">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Naam</th>
+        <th>Gemeente</th>
+        <th>Min. prijs</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @shops.each do |shop| %>
+          <tr onclick="document.location = '/winkel/<%= shop.address[:postcode] %>/<%= shop.slug %>';" <%= session[:basket] == nil || session[:basket].empty? || session[:basket][0][0].shop.id != shop.id ? 'class="shop-row"' : 'class="shop-row info"' %>>
+            <td data-title="Naam"><%= shop.name %></td>
+            <td data-title="Gemeente"><%= shop.address[:city].capitalize %></td>
+            <td data-title="Min. prijs">€<%= '%0.02f' % shop.min_price %></td>
+            <td><%= shop.opening_hours.in_hours?(Time.now) ? '<span class="label label-success">OPEN</span>' : '<span class="label label-danger">GESLOTEN</span>' %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <% end %>
+</div>

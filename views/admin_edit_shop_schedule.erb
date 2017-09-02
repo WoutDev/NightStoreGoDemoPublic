@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row">
+    <%= erb :admin_menu %>
+
+    <h2>Openingsuren: <%= @shop.name %></h2>
+    <hr />
+    <div class="col-md-9">
+      <%= flash_tag %>
+      <form class="form-horizontal" action="/admin/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>/edit/schedule" method="POST">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Dag</th>
+            <th class="col-md-1">Gesloten</th>
+            <th>Vanaf</th>
+            <th>Tot</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Maandag</td>
+            <td><input type="checkbox" value="yes" class="form-control checkbox" name="mon_closed" <%= 'checked' if @hours[:mon].keys[0].to_s == @hours[:mon].values[0].to_s && @hours[:mon].keys[1].to_s == @hours[:mon].values[1].to_s %> /></td>
+            <td><input type="time" class="form-control" name="mon_start_1" value="<%= @hours[:mon].keys[0] %>" /></td>
+            <td><input type="time" class="form-control" name="mon_end_2" value="<%= @hours[:mon].values[1] %>" /></td>
+          </tr>
+          <tr>
+            <td>Dinsdag</td>
+            <td><input type="checkbox" value="yes" class="form-control" name="tue_closed" <%= 'checked' if @hours[:tue].keys[0].to_s == @hours[:tue].values[0].to_s && @hours[:tue].keys[1].to_s == @hours[:tue].values[1].to_s %> /></td>
+            <td><input type="time" class="form-control" name="tue_start_1" value="<%= @hours[:tue].keys[0] %>" /></td>
+            <td><input type="time" class="form-control" name="tue_end_2" value="<%= @hours[:tue].values[1] %>" /></td>
+          </tr>
+          <tr>
+            <td>Woensdag</td>
+            <td><input type="checkbox" value="yes" class="form-control" name="wed_closed" <%= 'checked' if @hours[:wed].keys[0].to_s == @hours[:wed].values[0].to_s && @hours[:wed].keys[1].to_s == @hours[:wed].values[1].to_s %> /></td>
+            <td><input type="time" class="form-control" name="wed_start_1" value="<%= @hours[:wed].keys[0] %>" /></td>
+            <td><input type="time" class="form-control" name="wed_end_2" value="<%= @hours[:wed].values[1] %>" /></td>
+          </tr>
+          <tr>
+            <td>Donderdag</td>
+            <td><input type="checkbox" value="yes" class="form-control" name="thu_closed" <%= 'checked' if @hours[:thu].keys[0].to_s == @hours[:thu].values[0].to_s && @hours[:thu].keys[1].to_s == @hours[:thu].values[1].to_s %> /></td>
+            <td><input type="time" class="form-control" name="thu_start_1" value="<%= @hours[:thu].keys[0] %>" /></td>
+            <td><input type="time" class="form-control" name="thu_end_2" value="<%= @hours[:thu].values[1] %>" /></td>
+          </tr>
+          <tr>
+            <td>Vrijdag</td>
+            <td><input type="checkbox" value="yes" class="form-control" name="fri_closed" <%= 'checked' if @hours[:fri].keys[0].to_s == @hours[:fri].values[0].to_s && @hours[:fri].keys[1].to_s == @hours[:fri].values[1].to_s %>/></td>
+            <td><input type="time" class="form-control" name="fri_start_1" value="<%= @hours[:fri].keys[0] %>" /></td>
+            <td><input type="time" class="form-control" name="fri_end_2" value="<%= @hours[:fri].values[1] %>" /></td>
+          </tr>
+          <tr>
+            <td>Zaterdag</td>
+            <td><input type="checkbox" value="yes" class="form-control" name="sat_closed" <%= 'checked' if @hours[:sat].keys[0].to_s == @hours[:sat].values[0].to_s && @hours[:sat].keys[1].to_s == @hours[:sat].values[1].to_s %>/></td>
+            <td><input type="time" class="form-control" name="sat_start_1" value="<%= @hours[:sat].keys[0] %>" /></td>
+            <td><input type="time" class="form-control" name="sat_end_2" value="<%= @hours[:sat].values[1] %>" /></td>
+          </tr>
+          <tr>
+            <td>Zondag</td>
+            <td><input type="checkbox" value="yes" class="form-control" name="sun_closed"  <%= 'checked' if @hours[:sun].keys[0].to_s == @hours[:sun].values[0].to_s && @hours[:sun].keys[1].to_s == @hours[:sun].values[1].to_s %>/></td>
+            <td><input type="time" class="form-control" name="sun_start_1" value="<%= @hours[:sun].keys[0] %>" /></td>
+            <td><input type="time" class="form-control" name="sun_end_2" value="<%= @hours[:sun].values[1] %>" /></td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <a href="/admin/winkels" class="btn btn-default">Terug</a>
+            <input type="submit" class="btn btn-primary pull-right" value="Updaten" />
+          </div>
+        </div>
+        <br />
+      </form>
+    </div>
+  </div>
+</div>

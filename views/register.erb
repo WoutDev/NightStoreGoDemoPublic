@@ -1,0 +1,80 @@
+<div class="container">
+  <div class="row">
+    <h2>Registreer</h2>
+    <p>Meld je nu aan bij NightStoreGo! om o.a. je bestellingen sneller af te ronden!</p>
+    <p>Heb je al een account? <a href="/login">Klik hier om in te loggen!</a></p>
+  </div>
+  <div class="row">
+    <h2>Gegevens</h2>
+    <hr />
+    <br/>
+    <%= flash_tag %>
+    <form class="form-horizontal" id="register-form" role="form" method="POST" action="/registreer">
+      <div class="col-lg-7">
+        <fieldset>
+          <legend>Algemeen</legend>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="phone">Telefoon nr.</label>
+            <div class="col-sm-4">
+              <input type="tel" name="phone" id="phone" class="form-control" autocomplete="tel">
+            </div>
+
+            <label class="col-sm-2 control-label" for="password">Wachtwoord</label>
+            <div class="col-sm-4">
+              <input type="password" name="password" id="password" class="form-control">
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Leveringsadres</legend>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="street">Straatnaam</label>
+            <div class="col-sm-4">
+              <input type="text" name="street" id="street" class="form-control" autocomplete="address-line1">
+            </div>
+
+            <label class="col-sm-2 control-label" for="housenumber">Huisnummer</label>
+            <div class="col-sm-4">
+              <input type="text" name="housenumber" id="housenumber" class="form-control" autocomplete="address-line2">
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="postcode">Postcode</label>
+            <div class="col-sm-4">
+              <input type="text" name="postcode" id="postcode" class="form-control" autocomplete="postal-code">
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Voorwaarden</legend>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="policies"></label>
+            <div class="col-sm-10">
+              <div class="checkbox">
+                <label><input type="checkbox" value="yes" name="policies" id="policies">Ik ga akkoord met het <a href="/privacy">privacy statement</a> en de <a href="/voorwaarden">algemene voorwaarden</a> van NightStoreGo!</label>
+              </div>
+            </div>
+          </div>
+          <legend>Captcha</legend>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="captcha"></label>
+            <div class="col-sm-10">
+              <%= recaptcha_widget %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <div class="pull-right">
+                <button type="submit" id="submit-button" class="btn btn-primary">Registreren</button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <%= erb :admin_menu %>
+
+    <h2>Producten: <%= @shop.name %></h2>
+    <hr/>
+    <div class="col-md-9">
+      <%= flash_tag %>
+      <% @shop.products.each do |product| %>
+        <form action="/admin/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>/item/<%= product.id %>/edit" id="edit-product-<%= product.id %>" method="POST"></form>
+      <% end %>
+      <table class="table">
+        <thead>
+        <tr>
+          <th class="col-md-2">Naam</th>
+          <th class="col-md-2">Categorie</th>
+          <th class="col-md-1">Prijs</th>
+          <th class="col-md-2">Beschrijving</th>
+          <th class="col-md-1">Minimum leeftijd</th>
+          <th class="col-md-1"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @shop.products.each do |product| %>
+            <tr>
+              <td><input class="form-control" type="text" value="<%= product.name %>" name="name" form="edit-product-<%= product.id %>"/></td>
+              <td>
+                <select class="form-control" name="category" form="edit-product-<%= product.id %>">
+                  <% @categories.each do |category| %>
+                      <option <%= 'selected' if category.id == product.category.id %>><%= category.name %></option>
+                  <% end %>
+                </select>
+              </td>
+              <td><input class="form-control" type="text" name="price" value="<%= product.price %>" form="edit-product-<%= product.id %>"/></td>
+              <td><input class="form-control" type="text" name="description" value="<%= product.description %>" form="edit-product-<%= product.id %>"/></td>
+              <td><input class="form-control" type="number" name="min_age" value="<%= product.min_age %>" form="edit-product-<%= product.id %>"/></td>
+              <td>
+                <button type="submit" class="btn-warning btn-sm" form="edit-product-<%= product.id %>" style="text-decoration: none; color: inherit;"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                <button class="btn-danger btn-sm"><a href="/admin/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>/item/<%= product.id %>/delete" style="text-decoration: none; color: inherit;"><i class="fa fa-trash" aria-hidden="true"></i></a></button>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <a href="/admin/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>/item" class="btn btn-success">Toevoegen</a><br/><br/><br/>
+      <a href="/admin/winkels" class="btn btn-default">Terug</a>
+      </div>
+      <br/>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+    <%= erb :admin_menu %>
+
+    <h2>Admin <%= @account.admin? ? "opheffen" : "toewijzen" %>: <%= @account.phone %></h2>
+    <hr />
+    <div class="col-md-9">
+      <p>Weet je zeker dat je admin rechten wilt <%= @account.admin? ? "opheffen" : "toewijzen" %> voor dit account?</p>
+      <% if @account.admin? %>
+      <strong>Zonder admin rechten kan je niet aan het beheer-paneel!</strong><br /><br />
+      <% else %>
+      <strong>Met admin rechten kan je aan het beheer-paneel, en krijg je toegang tot veel functies die niet bedoeld zijn voor klanten!</strong><br /><br />
+      <% end %>
+      <form action="/admin/gebruikers/<%= @account.phone %>/admin" method="POST">
+        <input type="submit" value="Ik ben zeker" class="btn btn-warning" />
+      </form>
+    </div>
+  </div>
+</div>

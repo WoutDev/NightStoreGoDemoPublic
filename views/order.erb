@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="row">
+    <h2>Bestelling</h2>
+    <p>De bestelling zal geplaatst worden bij <a href="/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>"><%= @shop.name %></a></p>
+    <strong>Algemeen Totaal: </strong>€<%= '%0.02f' % session[:basket].inject(0) { |sum, item| sum += item[0].price * item[1] } %><br />
+  </div>
+  <div class="row">
+    <h2>Bestelinformatie</h2>
+    <br/>
+    <%= flash_tag %>
+    <form class="form-horizontal" id="order-form" role="form" method="POST" action="/bestel">
+      <div class="col-lg-7">
+        <fieldset>
+          <legend>Leveringsadres</legend>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="street">Straatnaam</label>
+            <div class="col-sm-4">
+              <input type="text" name="street" id="street" class="form-control" autocomplete="address-line1"<%= " value=\"#{session[:user].address[:street]}\"" if authenticated? %>>
+            </div>
+
+            <label class="col-sm-2 control-label" for="housenumber">Huisnummer</label>
+            <div class="col-sm-4">
+              <input type="text" name="housenumber" id="housenumber" class="form-control" autocomplete="address-line2"<%= " value=\"#{session[:user].address[:housenumber]}\"" if authenticated? %>>
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="postcode">Postcode</label>
+            <div class="col-sm-4">
+              <input type="text" name="postcode" id="postcode" class="form-control" autocomplete="postal-code"<%= " value=\"#{session[:user].address[:postcode]}\"" if authenticated? %>>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Contactgegevens</legend>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="phone">Telefoon nr.</label>
+            <div class="col-sm-10">
+              <input type="hidden" name="phone" class="form-control"<%= " value=\"#{session[:user].phone}\"" if authenticated? %>>
+              <input type="text" name="phone" id="phone" class="form-control" autocomplete="tel-national"<%= " value=\"#{session[:user].phone}\" disabled" if authenticated? %>>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Opmerkingen nachtwinkel</legend>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="comments">Opmerkingen</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" rows="5" id="comments" name="comments"></textarea>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Voorwaarden</legend>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="policies"></label>
+            <div class="col-sm-10">
+              <div class="checkbox">
+                <label><input type="checkbox" value="yes" name="policies" id="policies">Ik ga akkoord met de inhoud van het winkelmandje, door mij ingevulde gegevens, het <a href="/privacy">privacy statement</a> en de <a href="/voorwaarden">algemene voorwaarden</a> van NightStoreGo!</label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <input type="hidden" name="token" value="<%= @token %>" />
+        <fieldset>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <div class="pull-right">
+                <button type="submit" id="submit-button" class="btn btn-primary">Bestelling bevestigen</button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </form>
+    <div class="col-lg-5">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          Levering door <a href="/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>"><%= @shop.name %></a>
+        </div>
+        <div class="panel-body">
+          <span class="label label-success">OPEN</span><br /><br />
+          <strong>Geschatte levertijd:</strong><p><%= @shop.estimate_delivery_in_minutes %> minuten</p><br />
+          <strong>Adres:</strong><p><%= "#{@shop.address[:address]} <br /> #{@shop.address[:postcode]} #{@shop.address[:city].capitalize} <br /> #{@shop.address[:province]}" %></p>
+          <strong>Betaling:</strong><p>Betaling is contant en verloopt via de nachtwinkel.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <%= erb :admin_menu %>
+
+    <h2>Nieuw product</h2>
+    <hr />
+      <div class="col-sm-9">
+      <form class="form-horizontal" action="/admin/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>/item" method="POST">
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Naam</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" name="name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="price" class="col-sm-2 control-label">Prijs</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="price" name="price">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="description" class="col-sm-2 control-label">Beschrijving</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" id="description" name="description"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="minage" class="col-sm-2 control-label">Minimum leeftijd</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="minage" name="min_age" value="0">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="category" class="col-sm-2 control-label">Categorie</label>
+          <div class="col-sm-10">
+            <select class="form-control" name="category" id="category" name="category">
+              <% @categories.each do |category| %>
+                  <option><%= category.name %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <a href="/admin/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>/edit/products" class="btn btn-default">Terug</a>
+            <input type="submit" class="btn btn-primary pull-right" value="Aanmaken" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

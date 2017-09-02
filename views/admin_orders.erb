@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <%= erb :admin_menu %>
+
+    <h2>Bestellingen</h2>
+    <hr />
+    <div class="col-md-9">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>Telefoon</th>
+          <th>Totaal €</th>
+          <th>Datum</th>
+          <th>IP</th>
+          <th></th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @orders.each do |order| %>
+            <tr>
+              <td><%= order.id %></td>
+              <td><%= order.phone %></td>
+              <td>€<%= '%0.02f' % order.total %></td>
+              <td><%= order.created_at.localtime %></td>
+              <td><%= order.ip %></td>
+              <td><a href="/admin/bestelling/<%= order.id %>" class="btn btn-primary btn-xs">Info</a></td>
+              <td><a href="/admin/bestelling/<%= order.id %>/delete" class="btn btn-danger btn-xs">Delete</a></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

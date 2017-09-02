@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <%= erb :admin_menu %>
+
+    <div class="col-md-9">
+      <h2>Gebruikers</h2>
+      <hr/>
+      <%= flash_tag %>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Telefoon nr.</th>
+          <th>Adres</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @accounts.each do |account| %>
+            <tr>
+              <td class="col-md-2"><%= account.phone %></td>
+              <td class="col-md-6"><%= account.address[:street] + " " + account.address[:housenumber].to_s + " " + account.address[:postcode].to_s %></td>
+              <td class="col-md-1">
+                <a href="/admin/gebruikers/<%= account.phone %>/disable" class="btn btn-warning btn-xs"><%= account.disabled? ? 'Inschakelen' : 'Uitschakelen' %></a>
+              </td>
+              <td class="col-md-1">
+                <a href="/admin/gebruikers/<%= account.phone %>/delete" class="btn btn-danger btn-xs">Verwijderen</a>
+              </td>
+              <td class="col-md-1">
+                <a href="/admin/gebruikers/<%= account.phone %>/edit" class="btn btn-primary btn-xs">Aanpassen</a>
+              </td>
+              <td class="col-md-1">
+                <a href="/admin/gebruikers/<%= account.phone %>/admin" class="btn btn-info btn-xs"><%= account.admin? ? 'Admin status opheffen' : 'Admin status toewijzen' %></a>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

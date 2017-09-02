@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="row">
+    <%= erb :admin_menu %>
+
+    <h2>Edit: <%= @account.phone %></h2>
+    <hr />
+    <div class="col-md-9">
+      <%= flash_tag %>
+      <form class="form-horizontal form-responsive" action="/admin/gebruikers/<%= @account.phone %>/edit" method="POST">
+        <div class="col-md-9">
+          <fieldset>
+            <legend>Algemeen</legend>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="phone">Telefoon nr.</label>
+              <div class="col-sm-4">
+                <input type="tel" name="form_phone" id="phone" class="form-control" autocomplete="tel"<%= " value=\"#{@account.phone}\"" %>>
+              </div>
+
+              <label class="col-sm-2 control-label" for="password">Nieuw Wachtwoord</label>
+              <div class="col-sm-4">
+                <input type="password" name="form_password" id="password" class="form-control">
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Leveringsadres</legend>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="street">Straatnaam</label>
+              <div class="col-sm-4">
+                <input type="text" name="form_street" id="street" class="form-control" autocomplete="address-line1"<%= " value=\"#{@account.address[:street]}\"" %>>
+              </div>
+
+              <label class="col-sm-2 control-label" for="housenumber">Huisnummer</label>
+              <div class="col-sm-4">
+                <input type="text" name="form_housenumber" id="housenumber" class="form-control" autocomplete="address-line2"<%= " value=\"#{@account.address[:housenumber]}\"" %>>
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="postcode">Postcode</label>
+              <div class="col-sm-4">
+                <input type="text" name="form_postcode" id="postcode" class="form-control" autocomplete="postal-code"<%= " value=\"#{@account.address[:postcode]}\"" %>>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <div class="pull-right">
+                  <button type="submit" id="submit-button" class="btn btn-primary">Account aanpassen</button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,169 @@
+<div class="container">
+  <div class="row">
+    <%= erb :admin_menu %>
+
+    <h2><%= @shop.name %></h2>
+    <hr />
+    <div class="col-md-9">
+      <h3>Informatie</h3>
+      <hr />
+      <form class="form-horizontal" action="/admin/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>/update/info" method="POST">
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">Naam</label>
+          <div class="col-sm-10">
+            <input type="text" name="name" class="form-control" value="<%= @shop.name %>"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="min_price" class="col-sm-2 control-label">Minimum prijs</label>
+          <div class="col-sm-10">
+            <input type="text" name="min_price" class="form-control" value="<%= @shop.min_price %>"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email" class="col-sm-2 control-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" name="email" class="form-control" value="<%= @shop.email %>"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="estimate_delivery_time" class="col-sm-2 control-label">Gemiddelde levertijd (min)</label>
+          <div class="col-sm-10">
+            <input type="number" name="estimate_delivery_time" class="form-control" value="<%= @shop.estimate_delivery_in_minutes %>"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="street" class="col-sm-2 control-label">Straat + nr</label>
+          <div class="col-sm-10">
+            <input type="text" name="street" class="form-control" value="<%= @shop.address[:address] %>"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="city" class="col-sm-2 control-label">Stad</label>
+          <div class="col-sm-10">
+            <input type="text" name="city" class="form-control" value="<%= @shop.address[:city].capitalize %>"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="postcode" class="col-sm-2 control-label">Postcode</label>
+          <div class="col-sm-10">
+            <input type="text" name="postcode" class="form-control" value="<%= @shop.address[:postcode] %>" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="province" class="col-sm-2 control-label">Provincie</label>
+          <div class="col-sm-10">
+            <input type="text" name="province" class="form-control" value="<%= @shop.address[:province] %>"/>
+          </div>
+        </div>
+        <input type="submit" class="btn btn-primary pull-right" value="Updaten" />
+        <br />
+      </form>
+      <h3>Openingsuren</h3>
+      <hr />
+      <form class="form-horizontal" action="/admin/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>/update/schedule" method="POST">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Dag</th>
+            <th>Vanaf (1)</th>
+            <th>Tot (1)</th>
+            <th>Vanaf (2)</th>
+            <th>Tot (2)</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Maandag</td>
+            <td><input type="time" class="form-control" value="<%= @hours[:mon].keys[0] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:mon].values[0] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:mon].keys[1] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:mon].values[1] %>"/></td>
+          </tr>
+          <tr>
+            <td>Dinsdag</td>
+            <td><input type="time" class="form-control" value="<%= @hours[:tue].keys[0] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:tue].values[0] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:tue].keys[1] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:tue].values[1] %>"/></td>
+          </tr>
+          <tr>
+            <td>Woensdag</td>
+            <td><input type="time" class="form-control" value="<%= @hours[:wed].keys[0] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:wed].values[0] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:wed].keys[1] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:wed].values[1] %>"/></td>
+          </tr>
+          <tr>
+            <td>Donderdag</td>
+            <td><input type="time" class="form-control" value="<%= @hours[:thu].keys[0] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:thu].values[0] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:thu].keys[1] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:thu].values[1] %>"/></td>
+          </tr>
+          <tr>
+            <td>Vrijdag</td>
+            <td><input type="time" class="form-control" value="<%= @hours[:fri].keys[0] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:fri].values[0] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:fri].keys[1] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:fri].values[1] %>"/></td>
+          </tr>
+          <tr>
+            <td>Zaterdag</td>
+            <td><input type="time" class="form-control" value="<%= @hours[:sat].keys[0] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:sat].values[0] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:sat].keys[1] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:sat].values[1] %>"/></td>
+          </tr>
+          <tr>
+            <td>Zondag</td>
+            <td><input type="time" class="form-control" value="<%= @hours[:sun].keys[0] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:sun].values[0] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:sun].keys[1] %>"/></td>
+            <td><input type="time" class="form-control" value="<%= @hours[:sun].values[1] %>"/></td>
+          </tr>
+          </tbody>
+        </table>
+        <input type="submit" class="btn btn-primary pull-right" value="Updaten" />
+        <br />
+      </form>
+      <h3>Producten</h3>
+      <hr />
+      <form class="form-horizontal" action="/admin/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>/update/products" method="POST">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Naam</th>
+          <th>Categorie</th>
+          <th>Prijs</th>
+          <th>Beschrijving</th>
+          <th>Minimum leeftijd</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @shop.products.each do |product| %>
+            <tr>
+              <td><input class="form-control" type="text" value="<%= product.name %>" /></td>
+              <td>
+                <select class="form-control">
+                  <% @categories.each do |category| %>
+                    <option <%= 'selected' if category.id == product.category.id %>><%= category.name %></option>
+                  <% end %>
+                </select>
+              </td>
+              <td><input class="form-control" type="text" value="<%= product.price %>" /></td>
+              <td><input class="form-control" type="text" value="<%= product.description %>" /></td>
+              <td><input class="form-control" type="number" value="<%= product.min_age %>" /></td>
+              <td><a href="/admin/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>/item/<%= product.id %>/delete"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <a href="/admin/winkel/<%= @shop.address[:postcode] %>/<%= @shop.slug %>/item" class="btn btn-success">Toevoegen</a>
+
+      <input type="submit" class="btn btn-primary pull-right" value="Updaten" />
+      </form>
+    </div>
+  </div>
+</div>

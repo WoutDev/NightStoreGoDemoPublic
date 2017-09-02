@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <%= erb :admin_menu %>
+
+    <h2>Bestelling: <%= @order.id %></h2>
+    <hr />
+    <strong>Telefoon: </strong><%= @order.phone %><br />
+    <strong>IP: </strong><%= @order.ip %><br />
+    <strong>Totaal: </strong>€<%= '%0.02f' % @order.total %><br />
+    <strong>Adres: </strong><br />
+    <%= @order.address[:street] %> <%= @order.address[:housenumber] %><br />
+    <%= @order.address[:postcode] %><br />
+    <strong>Opmerking(en):</strong><br />
+    <%= @order.comments %><br /><br />
+
+    <div class="col-md-6">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Naam</th>
+          <th>Hoeveelheid</th>
+          <th>Totaal (toen)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @products.each do |k| %>
+          <tr>
+            <td><%= k[0].name %></td>
+            <td><%= k[1]['quantity'] %></td>
+            <td>€<%= '%0.02f' % (k[1]['quantity'].to_i * k[0].price) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

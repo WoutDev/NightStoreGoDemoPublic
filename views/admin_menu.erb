@@ -1,0 +1,20 @@
+<div class="col-md-3">
+  <div id="sidebar" class="well sidebar-nav">
+    <h5>
+      <small><b>BEHEER</b></small>
+    </h5>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="<%= 'active' if @admin_page == 'dashboard' %>"><a href="/admin"><i class="fa fa-home" aria-hidden="true"></i> Dashboard</a></li>
+      <li class="<%= 'active' if @admin_page == 'categories' %>"><a href="/admin/categorieën"><i class="fa fa-folder-open" aria-hidden="true"></i> Categorieën</a></li>
+      <li class="<%= 'active' if @admin_page == 'shops' %>"><a href="/admin/winkels"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Winkels</a></li>
+      <li class="<%= 'active' if @admin_page == 'orders' %>"><a href="/admin/bestellingen"><i class="fa fa-bars" aria-hidden="true"></i> Bestellingen</a></li>
+      <li class="<%= 'active' if @admin_page == 'accounts' %>"><a href="/admin/gebruikers"><i class="fa fa-user" aria-hidden="true"></i> Gebruikers</a></li>
+      </ul>
+    <h5>
+      <small><b>LOG UIT</b></small>
+    </h5>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Uitloggen</a></li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+    <%= erb :admin_menu %>
+
+    <h2>DELETE: <%= @product.name %> (winkel: <%= @shop.name %>)</h2>
+    <hr />
+    <div class="col-md-9">
+      <p>Weet je zeker dat je dit product wilt verwijderen? De informatie zal definitief verwijderd worden uit de databank.</p>
+      <form action="/admin/winkel/<%= @shop.address['postcode'] %>/<%= @shop.slug %>/item/<%= @product.id %>/delete" method="POST">
+        <input type="submit" value="Ik ben zeker" class="btn btn-danger" />
+      </form>
+    </div>
+  </div>
+</div>
